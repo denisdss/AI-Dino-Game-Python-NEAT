@@ -1,5 +1,6 @@
 import pygame
-from src.controllers.menu import menu
+from src.controllers.game import run_game
+from src.utils.fs import load_best_genome
 
 pygame.init()
 if __name__ == "__main__":
@@ -8,4 +9,4 @@ if __name__ == "__main__":
     #change window icon
     icon = pygame.image.load('assets/Dino/DinoDead.png')
     pygame.display.set_icon(icon)
-    menu(0, 0)
+    run_game(best_genome = load_best_genome())

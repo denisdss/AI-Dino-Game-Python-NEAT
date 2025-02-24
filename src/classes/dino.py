@@ -1,10 +1,11 @@
 from src.game_config import *
+from src.utils.draw import draw_sqr_dino
 
 class Dinosaur:
     X_POS = 80
     Y_POS = 310
     Y_POS_DUCK = 340
-    JUMP_VEL = 8.5
+    JUMP_VEL = 7
 
     def __init__(self):
         self.duck_img = DUCKING
@@ -22,6 +23,10 @@ class Dinosaur:
         self.dino_rect.x = self.X_POS
         self.dino_rect.y = self.Y_POS
 
+    def get_jump_vel(self):
+        return self.jump_vel
+    def get_rect_y(self):
+        return self.dino_rect.y
     def update(self, userInput):
         if self.dino_duck:
             self.duck()
@@ -33,15 +38,15 @@ class Dinosaur:
         if self.step_index >= 10:
             self.step_index = 0
 
-        if userInput[pygame.K_UP] and not self.dino_jump:
+        if userInput==0 and not self.dino_jump:
             self.dino_duck = False
             self.dino_run = False
             self.dino_jump = True
-        elif userInput[pygame.K_DOWN] and not self.dino_jump:
+        elif userInput==1 and not self.dino_jump:
             self.dino_duck = True
             self.dino_run = False
             self.dino_jump = False
-        elif not (self.dino_jump or userInput[pygame.K_DOWN]):
+        elif not (self.dino_jump) and userInput==2:
             self.dino_duck = False
             self.dino_run = True
             self.dino_jump = False
@@ -68,6 +73,9 @@ class Dinosaur:
         if self.jump_vel < - self.JUMP_VEL:
             self.dino_jump = False
             self.jump_vel = self.JUMP_VEL
+            self.dino_rect.y = self.Y_POS
 
     def draw(self, SCREEN):
         SCREEN.blit(self.image, (self.dino_rect.x, self.dino_rect.y))
+        # draw_sqr_dino(self) # Draws a square representing the dino
+        
